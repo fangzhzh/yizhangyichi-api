@@ -3,6 +3,7 @@ EXPOSE 3000
 COPY app.js /home/node
 COPY config /home/node/config
 COPY package.json  /home/node
+COPY package-lock.json /home/node
 COPY global_functions.js /home/node
 COPY routes /home/node/routes
 COPY controllers /home/node/controllers
