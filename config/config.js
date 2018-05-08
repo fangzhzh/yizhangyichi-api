@@ -1,4 +1,7 @@
-require('dotenv').config();//instatiate environment variables
+if (process.env.NODE_ENV !== "production") {
+    const dotenv = require("dotenv");
+    dotenv.config();
+}
 
 CONFIG = {} //Make this global to use all over the application
 

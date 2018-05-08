@@ -1,0 +1,61 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#Replaces a file, and writes it to the same location in /tmp/deployment/<version>/filename
+function formatTemplate (){
+    NEW_VERSION=$1
+    FILE=$2
+    OUTPUT_DIR="/tmp/deployment/${NEW_VERSION}"
+    OUTPUT_FILE="${OUTPUT_DIR}/$(basename ${FILE})"
+
+
+    mkdir -p ${OUTPUT_DIR}
+
+    sed -e "s/GITSHA/${NEW_VERSION}/g" ${FILE} > ${OUTPUT_FILE}
+
+    echo "${OUTPUT_FILE}"
+
+}
+
+if [[ "$1" == "" || "$2" == "" ]]; then
+  echo "You must specify an env.  Usage is $0 [env (latest, stable, production)] [sha to deploy]"
+  exit 1
+fi
+
+env="$1"
+sha="$2"
+
+echo "Checking for gcloud"
+
+#We explicity can't test for the directory, since it's created with an empty cache hit
+# if [ ! -f ${HOME}/google-cloud-sdk/bin/gcloud ]; then
+#   echo "gcloud not found, installing"
+#   rm -rf ${HOME}/google-cloud-sdk
+#   curl https://sdk.cloud.google.com | bash;
+# fi
+
+echo "Processing template"
+
+fileToCreate=$(formatTemplate ${sha} "${DIR}/../${env}/deploy.yaml")
+
+echo "Getting existing deployment"
+
+
+#Count the matching rcs. If it's 0, we just need to create 
+count=$(kubectl get rc --selector=run:yizhangyichi-api,env=${env} -o name |wc -l)
+
+if [[ ${count} -eq 0 ]]; then
+  echo "No deployment found, creating one"
+  CMD="kubectl create -f ${fileToCreate}"
+  echo ${CMD}
+  # ${CMD}
+  exit 0 
+fi
+
+
+existingRc=$(kubectl get rc --selector=run:yizhangyichi-api,env=${env} -o=jsonpath='{.items[0].metadata.name}')
+
+echo "Existing RC is ${existingRc} replacing with file"
+
+CMD="kubectl rolling-update ${existingRc} -f ${fileToCreate} --update-period 10s"
+echo ${CMD}
+# ${CMD}
