@@ -1,30 +1,26 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('project', {
+  return sequelize.define('Project', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
-      field: 'id'
+      autoIncrement: true
     },
     name: {
       type: DataTypes.STRING(100),
-      allowNull: true,
-      field: 'name'
+      allowNull: true
     },
-    createdTime: {
+    created_time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      field: 'created_time'
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
-    updatedTime: {
+    updated_time: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      field: 'updated_time'
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'Project'

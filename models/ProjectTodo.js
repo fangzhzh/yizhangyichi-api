@@ -1,18 +1,16 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('projectTodo', {
-    todoId: {
+  return sequelize.define('ProjectTodo', {
+    todo_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      primaryKey: true,
-      field: 'todo_id'
+      primaryKey: true
     },
-    projectId: {
+    project_id: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      primaryKey: true,
-      field: 'project_id'
+      primaryKey: true
     }
   }, {
     tableName: 'ProjectTodo'
