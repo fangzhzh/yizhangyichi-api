@@ -18,6 +18,12 @@ router.get('/', function(req, res, next) {
 });
 
 
+// todo
+router.get(     '/todos/zhang',         passport.authenticate('jwt', {session: false}), TodoController.getAll);
+router.get(     '/todos/chi',         passport.authenticate('jwt', {session: false}), TodoController.get);
+router.get(     '/todos/:todo_id:',         passport.authenticate('jwt', {session: false}), TodoController.get);
+
+// users 
 router.post(    '/users',           UserController.create);                                                    // C
 router.get(     '/users',           passport.authenticate('jwt', {session:false}), UserController.get);        // R
 router.put(     '/users',           passport.authenticate('jwt', {session:false}), UserController.update);     // U
