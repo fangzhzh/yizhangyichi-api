@@ -4,6 +4,7 @@ const router = express.Router();
 const UserController = require("./../controllers/UserController");
 const CompanyController = require("./../controllers/CompanyController");
 const HomeController = require("./../controllers/HomeController");
+const TodoController = require("./../controllers/TodoController");
 
 const custom = require("./../middleware/custom");
 
@@ -20,7 +21,11 @@ router.get("/", function(req, res, next) {
   });
 });
 
-router.post("/getaccessToken", UserController.getAccessToken);
+router.get(
+  "/accesstoken",
+  passport.authenticate("jwt", { session: false }),
+  UserController.getAccessToken
+);
 
 // todo
 router.get(
