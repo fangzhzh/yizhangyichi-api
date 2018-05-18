@@ -1,5 +1,6 @@
-const Todo = require('../models').Todo;
+const Todo = require("../models").Todo;
+const get = async function(req, res) {};
 module.exports.get = get;
-const get = async function(req, res) {
 
-}
+const getAll = async function(req, res) {};
+module.exports.getAll = getAll;

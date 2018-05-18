@@ -76,6 +76,12 @@ module.exports.login = login;
 
 const getAccessToken = async function(req, res) {
   const body = req.body;
-  const { refresh_token, }
+  console.log("getAccessToken", body);
+  const { deviceType, deviceId, pushToken } = body;
+  User.create({
+    UserID: deviceId,
+    deviceType: deviceType
+  });
+  return Response(res, { message: "getAccessToken good" });
 };
 module.exports.getAccessToken = getAccessToken;
