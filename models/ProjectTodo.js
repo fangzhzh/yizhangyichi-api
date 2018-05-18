@@ -2,12 +2,15 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ProjectTodo', {
-    todo_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      primaryKey: true
+    Todo_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false
     },
-    project_id: {
+    Project_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false
+    },
+    ProjectTodoID: {
       type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
