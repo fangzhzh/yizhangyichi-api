@@ -21,11 +21,7 @@ router.get("/", function(req, res, next) {
   });
 });
 
-router.get(
-  "/accesstoken",
-  passport.authenticate("jwt", { session: false }),
-  UserController.getAccessToken
-);
+router.get("/accesstoken", UserController.getAccessToken);
 
 // todo
 router.get(

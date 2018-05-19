@@ -75,13 +75,19 @@ const login = async function(req, res) {
 module.exports.login = login;
 
 const getAccessToken = async function(req, res) {
-  const body = req.body;
-  console.log("getAccessToken", body);
-  const { deviceType, deviceId, pushToken } = body;
-  User.create({
-    UserID: deviceId,
-    deviceType: deviceType
-  });
-  return Response(res, { message: "getAccessToken good" });
+  const query = req.query;
+
+  console.log("getAccessToken", req.body, req.params, query);
+  const { deviceType, deviceId, pushToken } = query;
+
+  [err, user] = await to(
+    User.create({
+      UserID: deviceId,
+      deviceType: deviceType
+    })
+  );
+  if (err) TE("user already exists with that phone number");
+
+  return ReS(res, { message: "getAccessToken good", user });
 };
 module.exports.getAccessToken = getAccessToken;

@@ -14,6 +14,14 @@ module.exports = function(sequelize, DataTypes) {
     TodoID: {
       type: DataTypes.STRING(45),
       allowNull: true
+    },
+    CreatedTime: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    UpdatedTime: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'UserTodo'

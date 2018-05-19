@@ -39,6 +39,10 @@ module.exports = function(sequelize, DataTypes) {
     Note: {
       type: DataTypes.STRING(1024),
       allowNull: true
+    },
+    Todocol: {
+      type: DataTypes.STRING(45),
+      allowNull: true
     }
   }, {
     tableName: 'Todo'
