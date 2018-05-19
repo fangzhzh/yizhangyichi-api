@@ -34,6 +34,14 @@ module.exports = function(sequelize, DataTypes) {
     pushToken: {
       type: DataTypes.STRING(100),
       allowNull: true
+    },
+    CreatedTime: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    UpdatedTime: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'User'

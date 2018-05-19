@@ -14,6 +14,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true
+    },
+    CreatedTime: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    UpdatedTime: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     tableName: 'ProjectTodo'
