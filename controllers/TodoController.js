@@ -21,3 +21,12 @@ module.exports.getZhang = getZhang;
 
 const get = async function(req, res) {};
 module.exports.get = get;
+
+const create = async function(req, res) {};
+module.exports.create = create;
+
+const update = async function(req, res) {};
+module.exports.update = update;
+
+const remove = async function(req, res) {};
+module.exports.remove = remove;
