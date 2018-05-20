@@ -5,6 +5,7 @@ const UserController = require("./../controllers/UserController");
 const CompanyController = require("./../controllers/CompanyController");
 const HomeController = require("./../controllers/HomeController");
 const TodoController = require("./../controllers/TodoController");
+const ProjectController = require("./../controllers/ProjectController");
 
 const custom = require("./../middleware/custom");
 
@@ -27,17 +28,43 @@ router.get(
   UserController.getAccessToken
 );
 
+// project
+router.get(
+  "/projects",
+  passport.authenticate("jwt", { session: false }),
+  ProjectController.getAll
+);
+router.get(
+  "/projects/:project_id",
+  passport.authenticate("jwt", { session: false }),
+  ProjectController.get
+); // R
+router.put(
+  "/projects/:project_id",
+  passport.authenticate("jwt", { session: false }),
+  // custom.company,
+  ProjectController.update
+); // U
+router.delete(
+  "/projects/:project_id",
+  passport.authenticate("jwt", { session: false }),
+  // custom.company,
+  ProjectController.remove
+); // D
+
 // todo
 router.get(
   "/todos/zhang",
   passport.authenticate("jwt", { session: false }),
   TodoController.getAll
 );
+
 router.get(
   "/todos/chi",
   passport.authenticate("jwt", { session: false }),
   TodoController.get
 );
+
 router.get(
   "/todos/:todo_id:",
   passport.authenticate("jwt", { session: false }),
