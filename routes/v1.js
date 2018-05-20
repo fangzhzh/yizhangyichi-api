@@ -54,15 +54,20 @@ router.delete(
 
 // todo
 router.get(
-  "/todos/zhang",
+  "/todos",
   passport.authenticate("jwt", { session: false }),
-  TodoController.getAll
+  TodoController.getChi
 );
 
 router.get(
   "/todos/chi",
   passport.authenticate("jwt", { session: false }),
-  TodoController.get
+  TodoController.getChi
+);
+router.get(
+  "/todos/zhang",
+  passport.authenticate("jwt", { session: false }),
+  TodoController.getZhang
 );
 
 router.get(
