@@ -1,6 +1,5 @@
 const { GOOGLE_USER_INFO_API } = require("../utils/Const");
 const fetch = require("node-fetch");
-const User = require("../models").User;
 const authService = require("./../services/AuthService");
 const create = async function(req, res) {
   res.setHeader("Content-Type", "application/json");
@@ -121,7 +120,6 @@ const getAccessToken = async function(req, res) {
 
     return ReS(res, {
       message: "getAccessToken good",
-      user: user.toWeb(),
       token: user.getJWT()
     });
   }
