@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development node ./bin/www",
-    "start": "NODE_ENV=production node ./bin/www"
+    "dev": "NODE_ENV=development nodemon ./bin/www",
+    "start": "NODE_ENV=production nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -17,8 +17,10 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.0",
     "mysql2": "^1.5.1",
+    "node-fetch": "^2.1.2",
     "parse-error": "^0.2.0",
     "passport": "^0.4.0",
+    "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^3.0.0",
     "sequelize": "^4.31.2",
     "sequelize-cli": "^3.0.0",

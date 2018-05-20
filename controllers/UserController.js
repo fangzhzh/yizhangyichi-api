@@ -1,6 +1,7 @@
+const { GOOGLE_USER_INFO_API } = require("../utils/Const");
+const fetch = require("node-fetch");
 const User = require("../models").User;
 const authService = require("./../services/AuthService");
-
 const create = async function(req, res) {
   res.setHeader("Content-Type", "application/json");
   const body = req.body;
@@ -77,17 +78,52 @@ module.exports.login = login;
 const getAccessToken = async function(req, res) {
   const query = req.query;
 
-  console.log("getAccessToken", req.body, req.params, query);
+  console.log("getAccessToken", req.body, req.params, req.query, req.user);
   const { deviceType, deviceId, pushToken } = query;
 
-  [err, user] = await to(
-    User.create({
-      UserID: deviceId,
-      deviceType: deviceType
+  [err, userResponse] = await to(
+    fetch("https://www.googleapis.com/oauth2/v3/userinfo?alt=json", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${req.user}`
+      }
     })
   );
-  if (err) TE("user already exists with that phone number");
+  if (userResponse.status != 200) {
+    console.log("getAccessToken userResponse", userResponse.status);
+    res.statusCode = userResponse.status;
+    return res.json({ success: false, error: userResponse.status });
+  } else {
+    if (err) {
+      console.log("getAccessToken err", err);
+      return ReE(res, err, 403);
+    }
+    const userInfo = await userResponse.json();
+    console.log("getAccessToken userInfo", userInfo);
+    [err, user] = await to(
+      authService.createIfNotExistUser({
+        UserID: userInfo.email.replace(/[@.]/g, "_"),
+        email: userInfo.email,
+        name: userInfo.name,
+        picture: userInfo.picture,
+        firstName: userInfo.family_name,
+        lastName: userInfo.given_name,
+        type: "google",
+        deviceID: deviceId,
+        deviceType: deviceType,
+        pushToken: pushToken
+      })
+    );
+    if (err) TE(err);
 
-  return ReS(res, { message: "getAccessToken good", user });
+    console.log(err, user);
+    if (err) TE("user already exists with that phone number");
+
+    return ReS(res, {
+      message: "getAccessToken good",
+      user: user.toWeb(),
+      token: user.getJWT()
+    });
+  }
 };
 module.exports.getAccessToken = getAccessToken;

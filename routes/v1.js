@@ -21,7 +21,11 @@ router.get("/", function(req, res, next) {
   });
 });
 
-router.get("/accesstoken", UserController.getAccessToken);
+router.get(
+  "/accesstoken",
+  passport.authenticate("bearer", { session: false }),
+  UserController.getAccessToken
+);
 
 // todo
 router.get(
