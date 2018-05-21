@@ -71,6 +71,12 @@ router.post(
   TodoController.create
 );
 
+router.put(
+  "/todos",
+  passport.authenticate("jwt", { session: false }),
+  TodoController.update
+);
+
 router.get(
   "/todos/:todo_id",
   passport.authenticate("jwt", { session: false }),
