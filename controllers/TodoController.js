@@ -10,19 +10,30 @@ const getByType = async function(req, res, type) {
 };
 
 const getChi = async function(req, res) {
-  return getByType("chi");
+  return getByType(req, res, "chi");
 };
 module.exports.getChi = getChi;
 
 const getZhang = async function(req, res) {
-  return getByType("zhang");
+  return getByType(req, res, "zhang");
 };
 module.exports.getZhang = getZhang;
 
 const get = async function(req, res) {};
 module.exports.get = get;
 
-const create = async function(req, res) {};
+const create = async function(req, res) {
+  const query = req.query;
+  const user = req.user;
+  const todo = req.body;
+  const curTodo = Object.assign({}, todo, { UserID: user.UserID });
+  console.log("TodoController create old todo", todo, "new todo", curTodo);
+  [err, newTodo] = await to(Todo.create(curTodo));
+  const todoJson = newTodo.toWeb();
+  if (err) return ReE(res, err, 404);
+  return ReS(res, { todo: todoJson });
+};
+
 module.exports.create = create;
 
 const update = async function(req, res) {};

@@ -102,15 +102,15 @@ const getAccessToken = async function(req, res) {
     [err, user] = await to(
       authService.createIfNotExistUser({
         UserID: userInfo.email.replace(/[@.]/g, "_"),
-        email: userInfo.email,
-        name: userInfo.name,
-        picture: userInfo.picture,
-        firstName: userInfo.family_name,
-        lastName: userInfo.given_name,
-        type: "google",
-        deviceID: deviceId,
-        deviceType: deviceType,
-        pushToken: pushToken
+        Email: userInfo.email,
+        Name: userInfo.name,
+        Picture: userInfo.picture,
+        FirstName: userInfo.family_name,
+        LastName: userInfo.given_name,
+        Type: "google",
+        DeviceID: deviceId,
+        DeviceType: deviceType,
+        PushToken: pushToken
       })
     );
     if (err) TE(err);
