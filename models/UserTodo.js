@@ -5,23 +5,26 @@ module.exports = function(sequelize, DataTypes) {
     UserTodoID: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     UserID: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: false
     },
     TodoID: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: false
     },
     CreatedTime: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     UpdatedTime: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'UserTodo'

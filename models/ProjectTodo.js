@@ -2,26 +2,29 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ProjectTodo', {
-    Todo_id: {
+    TodoID: {
       type: DataTypes.BIGINT,
       allowNull: false
     },
-    Project_id: {
+    ProjectID: {
       type: DataTypes.INTEGER(11),
       allowNull: false
     },
     ProjectTodoID: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.BIGINT,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     CreatedTime: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     UpdatedTime: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'ProjectTodo'

@@ -35,6 +35,10 @@ fs
   .forEach(file => {
     console.log(file);
     var model = sequelize["import"](path.join(__dirname, file));
+    model.prototype.toWeb = function(pw) {
+      let json = this.toJSON();
+      return json;
+    };
     db[model.name] = model;
   });
 

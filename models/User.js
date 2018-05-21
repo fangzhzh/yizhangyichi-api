@@ -11,51 +11,54 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         primaryKey: true
       },
-      firstName: {
+      FirstName: {
         type: DataTypes.STRING(45),
         allowNull: true
       },
-      type: {
+      Type: {
         type: DataTypes.STRING(64),
-        allowNull: true
+        allowNull: false,
+        defaultValue: "google"
       },
-      email: {
+      Email: {
         type: DataTypes.STRING(100),
         allowNull: true
       },
-      deviceID: {
+      DeviceID: {
         type: DataTypes.STRING(100),
         allowNull: true
       },
-      deviceType: {
+      DeviceType: {
         type: DataTypes.STRING(100),
         allowNull: true
       },
-      pushType: {
+      PushType: {
         type: DataTypes.STRING(100),
         allowNull: true
       },
-      pushToken: {
+      PushToken: {
         type: DataTypes.STRING(100),
         allowNull: true
       },
       CreatedTime: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: false,
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP")
       },
       UpdatedTime: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: false,
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP")
       },
-      lastName: {
+      LastName: {
         type: DataTypes.STRING(45),
         allowNull: true
       },
-      picture: {
+      Picture: {
         type: DataTypes.STRING(1000),
         allowNull: true
       },
-      name: {
+      Name: {
         type: DataTypes.STRING(100),
         allowNull: true
       }
@@ -64,6 +67,7 @@ module.exports = function(sequelize, DataTypes) {
       tableName: "User"
     }
   );
+
   Model.prototype.getJWT = function() {
     let expiration_time = parseInt(CONFIG.jwt_expiration);
     return jwt.sign({ user_id: this.UserID }, CONFIG.jwt_encryption, {
@@ -71,9 +75,5 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-  Model.prototype.toWeb = function(pw) {
-    let json = this.toJSON();
-    return json;
-  };
   return Model;
 };

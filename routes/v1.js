@@ -54,22 +54,44 @@ router.delete(
 
 // todo
 router.get(
-  "/todos/zhang",
+  "/todos",
   passport.authenticate("jwt", { session: false }),
-  TodoController.getAll
+  TodoController.getChi
 );
 
 router.get(
-  "/todos/chi",
+  "/todos",
   passport.authenticate("jwt", { session: false }),
-  TodoController.get
+  TodoController.getChi
+);
+
+router.post(
+  "/todos",
+  passport.authenticate("jwt", { session: false }),
+  TodoController.create
+);
+
+router.put(
+  "/todos",
+  passport.authenticate("jwt", { session: false }),
+  TodoController.update
 );
 
 router.get(
-  "/todos/:todo_id:",
+  "/todos/:todo_id",
   passport.authenticate("jwt", { session: false }),
   TodoController.get
-);
+); // R
+router.put(
+  "/todos/:todo_id",
+  passport.authenticate("jwt", { session: false }),
+  TodoController.update
+); // U
+router.delete(
+  "/todos/:todo_id",
+  passport.authenticate("jwt", { session: false }),
+  TodoController.remove
+); // D
 
 // users
 router.post("/users", UserController.create); // C

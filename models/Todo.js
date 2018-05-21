@@ -14,21 +14,23 @@ module.exports = function(sequelize, DataTypes) {
     },
     CreatedTime: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     UpdatedTime: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     Status: {
       type: DataTypes.INTEGER(11),
-      allowNull: true
+      allowNull: false,
+      defaultValue: '0'
     },
     Type: {
       type: DataTypes.INTEGER(11),
-      allowNull: true
+      allowNull: false,
+      defaultValue: '0'
     },
     TodoType: {
       type: DataTypes.STRING(45),
@@ -38,10 +40,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     Note: {
       type: DataTypes.STRING(1024),
-      allowNull: true
-    },
-    Todocol: {
-      type: DataTypes.STRING(45),
       allowNull: true
     }
   }, {
