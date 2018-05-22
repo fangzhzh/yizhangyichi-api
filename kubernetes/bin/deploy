@@ -10,7 +10,7 @@ function formatTemplate (){
 
     mkdir -p ${OUTPUT_DIR}
 
-    sed -e "s/GITSHA/${NEW_VERSION}/g" ${FILE} > ${OUTPUT_FILE}
+    sed -e "s/version:\ [0-9a-zA-Z]*$/version: GITSHA/" ${FILE} | sed -e "s/GITSHA/${NEW_VERSION}/g"  > ${OUTPUT_FILE}
 
     echo "${OUTPUT_FILE}"
 
@@ -24,7 +24,7 @@ fi
 env="$1"
 sha="$2"
 
-echo "Checking for gcloud"
+#echo "Checking for gcloud"
 
 #We explicity can't test for the directory, since it's created with an empty cache hit
 # if [ ! -f ${HOME}/google-cloud-sdk/bin/gcloud ]; then
@@ -33,29 +33,28 @@ echo "Checking for gcloud"
 #   curl https://sdk.cloud.google.com | bash;
 # fi
 
-echo "Processing template"
+#$echo "Processing template"
 
-fileToCreate=$(formatTemplate ${sha} "${DIR}/../${env}/deploy.yaml")
+#fileToCreate=$(formatTemplate ${sha} "${DIR}/../${env}/deploy.yaml")
 
 echo "Getting existing deployment"
 
 
-#Count the matching rcs. If it's 0, we just need to create 
-count=$(kubectl get rc --selector=run:yizhangyichi-api,env=${env} -o name |wc -l)
+#Count the matching deployment. If it's 0, we just need to create 
+#count=$(kubectl get deployment --selector=run=yizhangyichi-api,env=${env} -o name |wc -l)
 
-if [[ ${count} -eq 0 ]]; then
-  echo "No deployment found, creating one"
-  CMD="kubectl create -f ${fileToCreate}"
-  echo ${CMD}
-  # ${CMD}
-  exit 0 
-fi
+#if [[ ${count} -eq 0 ]]; then
+#  echo "No deployment found, creating one"
+#  CMD="kubectl create -f ${fileToCreate}"
+#  echo ${CMD}
+#  # ${CMD}
+#  exit 0 
+#fi
 
+CMD="kubectl set image deployment/yizhangyichi-api yizhangyichi-api=gcr.io/yizhangyichi-20180401/yizhangyichi-api:${sha}"
+#existingRc=$(kubectl get deployment --selector=run=yizhangyichi-api,env=${env} -o=jsonpath='{.items[0].metadata.name}')
 
-existingRc=$(kubectl get rc --selector=run:yizhangyichi-api,env=${env} -o=jsonpath='{.items[0].metadata.name}')
-
-echo "Existing RC is ${existingRc} replacing with file"
-
-CMD="kubectl rolling-update ${existingRc} -f ${fileToCreate} --update-period 10s"
+#$echo "Existing deployment is ${existingRc} replacing with file"
+#CMD="kubectl  ${existingRc} -f ${fileToCreate} --update-period 10s"
 echo ${CMD}
-# ${CMD}
+${CMD}

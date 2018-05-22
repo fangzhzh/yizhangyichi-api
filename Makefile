@@ -24,4 +24,4 @@ deploy: build_image push_to_docker_hub
 	./kubernetes/bin/deploy prod $(GIT_SHA)
 
 pure_deploy: 	
-	./kubernetes/bin/deploy prod $(IMAGE_VERSION)
+	./kubernetes/bin/deploy prod $(GIT_SHA)

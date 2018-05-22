@@ -22,6 +22,13 @@
     + `make push_to_dokcer_hub`
 - deploy
     + `make deploy`
+- check status
+    + Rollout Status 
+        - `$ kubectl rollout status deployment nginx`
+    + Pause Rolling Update 
+        - `$ kubectl rollout pause deployment <deployment>`
+    + Resume Rolling Update 
+        - `$ kubectl rollout resume deployment <deployment>`
 
 ## Miscs
 
