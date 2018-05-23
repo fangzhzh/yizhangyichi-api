@@ -7,22 +7,28 @@
 	gcloud container clusters create yizhangyichi-cluster \
 				--num-nodes 1 \
 				--machine-type n1-standard-1 \
-				--zone asia-east1-a
+				--zone us-central1-a
 ```
 
 - building docker image 
     + `docker build -t gcr.io/yizhangyichi-20180401/yizhangyichi-api:v1 .`
 - push to registry 
     + `gcloud docker -- push gcr.io/yizhangyichi-20180401/yizhangyichi-api:v1`
-- create pods
+- if no credentials
 
 ```
+    gcloud container clusters get-credentials yizhangyichi-cluster --zone us-central1-a
+```    
+- create pods
+
+- 
+```
 	kubectl run yizhangyichi-api \
-		--image=gcr.io/yizhangyichi-20180401/yizhangyichi-api:v1 \
+		--image=gcr.io/yizhangyichi-20180401/yizhangyichi-api:dd363fbf11dc \
 		--port 3000
 ```
 
-- Allow external traffic `ubectl expose deployment yizhangyichi-api --type "LoadBalancer"` 
+- Allow external traffic `kubectl expose deployment yizhangyichi-api --type "LoadBalancer"` 
     + check `kubectl get services`
 - Scale up your service 
     + `kubectl scale deployment hello-node --replicas=4` 
