@@ -69,13 +69,15 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      - command:
-        - /cloud_sql_proxy
-        - -instances=yizhangyichi-20180401:us-central1:yizhangyichi=tcp:3307
-        - -credential_file=/secrets/cloudsql/credentials.json
+      - name: cloudsql-proxy
+        command: [
+         "/cloud_sql_proxy",
+         " -instances=yizhangyichi-20180401:us-central1:yizhangyichi-sql=tcp:3307"
+         " -credential_file=/secrets/cloudsql/credentials.json"
+        ]
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         imagePullPolicy: IfNotPresent
-        name: cloudsql-proxy
+        
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

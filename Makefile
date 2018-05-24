@@ -21,7 +21,7 @@ push_to_docker_hub:
 	gcloud docker -- push gcr.io/$(PROJECT)/$(STACK):$(IMAGE_VERSION)
 
 deploy: build_image push_to_docker_hub
-	./kubernetes/bin/deploy prod $(GIT_SHA)
+	./kubernetes/bin/deploy prod $(IMAGE_VERSION)
 
 pure_deploy: 	
-	./kubernetes/bin/deploy prod $(GIT_SHA)
+	./kubernetes/bin/deploy prod $(IMAGE_VERSION)
